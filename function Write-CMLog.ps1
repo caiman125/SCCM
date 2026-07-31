@@ -1,4 +1,4 @@
-function write-CMLog{
+function Write-CMLog{
   param(
     [string]$Message,
     [string]$Component = "Component or module",
