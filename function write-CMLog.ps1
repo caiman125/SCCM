@@ -1,15 +1,24 @@
-function write-CMLog
-param(
-[string]$Message,
-[string]$Component = "Run Scan",
-[string]$LogFile - STSErv.Value("SMSIPU_F1leLogCurrentTS")
-49 48 47 46 45 44 ASASEEY ECY RNEBERE
-if(test-Path $LogFile -PathType Container)( SLogFile - "SLogFlle\smsts-PSScript. log"
-try
-$noM - Get-Date Soffsetminutes- [int]([TimeZoneInfo]::Local.GetUtcoffset($now).TotalMlnutes) $formatted -"(0:H:m:ss.fffH[1H2:03) -f inov, ($(1f (Soffsetinutes g 0) (--" ) else ( ";" ])), [math]::Abs(Soffsetrinutes)
-$Time - $formatted
-)
-catch
-Mrite-Error "Erreur lors du formatage de "heure : $_"
-) ISTime- Get-Date -Format HH:mm:ss.fff-120" $Date - Get-Date -Format "M-dd-yyyy
-$Loglessage = "<![LOG[$essage]loG]i><time-""$Tima"" date-""GDate"" component-""$Componant"" context-"""" type-""1"" thread-""$PID"" file-"""">" Add-content -Path SLogfile -Value $Lopiessege -Encoding Default
+function write-CMLog{
+  param(
+    [string]$Message,
+    [string]$Component = "Component or module",
+    [string]$LogFile = "File Path"
+    )
+    if(test-Path $LogFile -PathType Container){
+        $LogFile = "$LogFlle\smsts-PSScript.log"
+    }
+    try {
+      $now = Get-Date
+      $offsetMinutes = [int]([TimeZoneInfo]::Local.GetUtcoffset($now).TotalMlnutes)
+      $formatted = "{0:H:m:ss.fffH}{1}{2:D3}",
+        ($(if ($offsetMinutes -ge 0) { "-" } else { "+" })),
+        [math]::Abs($offsetminutes)  
+      $Time - $formatted
+    }
+    catch{
+      Write-Error "Erreur lors du formatage de l'heure : $_"
+    }
+    $Date = Get-Date -Format "MM-dd-yyyy"
+    $Loglessage = "<![LOG[$Message]LOG]!><time=""$Time"" date=""$Date"" component=""$Componant"" context="""" type=""1"" thread=""$PID"" file="""">"
+    Add-content -Path $LogFile -Value $LogMessege -Encoding Default
+}
